@@ -1,3 +1,41 @@
+# Cách train
+1. Tạo TTS conda envs: 
+
+```bash
+conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
+```
+2. Download `github.com/tuananhktmt/FastSpeech2` về máy, giải nén, vào thư mục FastSpeech2-master, chạy:
+```
+pip install -r requirements.txt
+```
+3. Download dataset: LJSpeech 1.1 về máy, lưu trong `./data/ljspeech` :
+[LJSpeech](https://keithito.com/LJ-Speech-Dataset/) 
+
+```
+[data/ljspeech/  - metadata.csv
+                 - wavs: 
+                         - LJ001-0003.wav
+                         - LJ001-0004.wav
+                         - LJ001-0005.wav
+                         - LJ001-0001.wav
+                         - LJ001-0002.wav
+```
+Xoá bớt data đi train cho nhanh
+4. Sửa đường dẫn data trong file `config/LJSpeech/preprocess.yaml` rồi chạy:
+```
+python prepare_align.py config/LJSpeech/preprocess.yaml
+```
+5. Alignments for the LJSpeech and AISHELL-3 datasets are provided [here](https://drive.google.com/drive/folders/1DBRkALpPd6FL9gjHMmMEdHODmkgNIIK4?usp=sharing).
+You have to unzip the files in ``preprocessed_data/LJSpeech/TextGrid/``.
+
+After that, run the preprocessing script by
+```
+python preprocess.py config/LJSpeech/preprocess.yaml
+``` 
+đang làm đến đây thôi...
+
+
+
 # FastSpeech 2 - PyTorch Implementation
 
 This is a PyTorch implementation of Microsoft's text-to-speech system [**FastSpeech 2: Fast and High-Quality End-to-End Text to Speech**](https://arxiv.org/abs/2006.04558v1). 

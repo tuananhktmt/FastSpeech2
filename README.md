@@ -1,16 +1,14 @@
 # Cách train
 1. Tạo TTS conda envs: 
-
 ```bash
 conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
 ```
 2. Download `github.com/tuananhktmt/FastSpeech2` về máy, giải nén, vào thư mục FastSpeech2-master, chạy:
-```
+```bash
 pip install -r requirements.txt
 ```
 3. Download dataset: LJSpeech 1.1 về máy, lưu trong `./data/ljspeech` :
 [LJSpeech](https://keithito.com/LJ-Speech-Dataset/) 
-
 ```
 [data/ljspeech/  - metadata.csv
                  - wavs: 
@@ -19,19 +17,73 @@ pip install -r requirements.txt
                          - LJ001-0005.wav
                          - LJ001-0001.wav
                          - LJ001-0002.wav
+"D:\Code\TTS\FastSpeech2-master\data\ljspeech\metadata.csv"
+"D:\Code\TTS\FastSpeech2-master\data\ljspeech\wavs\LJ001-0003.wav"
+"D:\Code\TTS\FastSpeech2-master\data\ljspeech\wavs\LJ001-0004.wav"
+"D:\Code\TTS\FastSpeech2-master\data\ljspeech\wavs\LJ001-0001.wav"
+"D:\Code\TTS\FastSpeech2-master\data\ljspeech\wavs\LJ001-0002.wav"
+..........
 ```
+
 Xoá bớt data đi train cho nhanh
-4. Sửa đường dẫn data trong file `config/LJSpeech/preprocess.yaml` rồi chạy:
+4. Sửa đường dẫn data trong file `config/LJSpeech/preprocess.yaml`, nếu có xoá file đi, thì tính lại `val_size:`, đổi thành số phù hợp với tổng số file trong data, rồi chạy:
 ```
 python prepare_align.py config/LJSpeech/preprocess.yaml
 ```
 5. Alignments for the LJSpeech and AISHELL-3 datasets are provided [here](https://drive.google.com/drive/folders/1DBRkALpPd6FL9gjHMmMEdHODmkgNIIK4?usp=sharing).
-You have to unzip the files in ``preprocessed_data/LJSpeech/TextGrid/``.
+You have to unzip the files in `preprocessed_data/LJSpeech/TextGrid/`.
+lúc này, cái TextGrid sẽ có thư mục kiểu như này:
+```
+"D:\Code\TTS\FastSpeech2-master\data\preprocessed_data\LJSpeech\TextGrid\LJSpeech\LJ001-0003.TextGrid
+                                                                                 \LJ001-0004.TextGrid
+                                                                                 \LJ001-0001.TextGrid
+                                                                                 \LJ001-0002.TextGrid
+                                                                                 ..........
+```
+Dòng số 67-69, sửa thành như này, để nó hiển thị đúng tiến độ đang xử lý: 
+```python
+        for i, speaker in enumerate( os.listdir(self.in_dir)) :
+            speakers[speaker] = i
+            for wav_name in tqdm(os.listdir(os.path.join(self.in_dir, speaker)) ):
+
+```
 
 After that, run the preprocessing script by
 ```
 python preprocess.py config/LJSpeech/preprocess.yaml
 ``` 
+vậy là đã xong bước này. Đến đây, bạn kiểm tra  xem có các thư mục sau đây không, và trong nó có nội dung không, nếu có là OK rồi:
+```
+"D:\Code\TTS\FastSpeech2-master\data\preprocessed_data\LJSpeech\energy"
+"D:\Code\TTS\FastSpeech2-master\data\preprocessed_data\LJSpeech\mel"
+"D:\Code\TTS\FastSpeech2-master\data\preprocessed_data\LJSpeech\pitch"
+"D:\Code\TTS\FastSpeech2-master\data\preprocessed_data\LJSpeech\TextGrid"
+"D:\Code\TTS\FastSpeech2-master\data\preprocessed_data\LJSpeech\duration"
+```
+Có cả thêm các file này nữa:
+```
+"D:\Code\TTS\FastSpeech2-master\data\preprocessed_data\LJSpeech\speakers.json"
+"D:\Code\TTS\FastSpeech2-master\data\preprocessed_data\LJSpeech\stats.json"
+"D:\Code\TTS\FastSpeech2-master\data\preprocessed_data\LJSpeech\train.txt"
+"D:\Code\TTS\FastSpeech2-master\data\preprocessed_data\LJSpeech\val.txt"
+```
+trong thư mục data:
+```
+D:\Code\TTS\FastSpeech2-master\data\
+├───ljspeech
+│   └───wavs
+├───preprocessed_data
+│   └───LJSpeech
+│       ├───duration
+│       ├───energy
+│       ├───mel
+│       ├───pitch
+│       └───TextGrid
+│           └───LJSpeech
+└───raw_data
+    └───LJSpeech
+        └───LJSpeech
+```        
 đang làm đến đây thôi...
 
 

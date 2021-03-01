@@ -1,4 +1,11 @@
 # Cách train
+Chuẩn bị:
+-Train trên windows 10:
+cài thêm `colorama` để tqdm hoạt động đúng, không bị xuống nhiều dòng.
+```
+pip install colorama
+```
+
 1. Tạo TTS conda envs: 
 ```bash
 conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
@@ -42,10 +49,11 @@ lúc này, cái TextGrid sẽ có thư mục kiểu như này:
                                                                                  ..........
 ```
 Dòng số 67-69, sửa thành như này, để nó hiển thị đúng tiến độ đang xử lý: 
+file: `D:\Code\TTS\FastSpeech2-master\preprocessor\preprocessor.py`
 ```python
-        for i, speaker in enumerate( os.listdir(self.in_dir)) :
+        for i, speaker in enumerate( tqdm(os.listdir(self.in_dir)),  desc = 'Dataset'):
             speakers[speaker] = i
-            for wav_name in tqdm(os.listdir(os.path.join(self.in_dir, speaker)) ):
+            for wav_name in tqdm(os.listdir(os.path.join(self.in_dir, speaker)), desc = 'speaker'):
 
 ```
 

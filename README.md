@@ -110,8 +110,22 @@ python train.py -p config/LJSpeech/preprocess.yaml -m config/LJSpeech/model.yaml
 ```
 tuy nhiên trên win, cái tqdm lồng nhau nó chạy không tốt lắm, nó cứ bị xuống dòng khi hết 100%, cần phải sửa lại code cho nó ngon
 
-đang làm đến đây thôi...
-
+Cuối cùng, sau khi train xong, xem kết quả trong này:
+```
+PS D:\Code\TTS\FastSpeech2-master\output>
+D:.
+├───chkpoint
+├───ckpt
+│   └───LJSpeech
+│       └───data
+├───log
+│   └───LJSpeech
+│       ├───train
+│       └───val
+└───result
+    └───LJSpeech
+```
+có thể chạy tensorboard để nhìn kết quả cho nó rõ nét hơn.
 
 
 # FastSpeech 2 - PyTorch Implementation

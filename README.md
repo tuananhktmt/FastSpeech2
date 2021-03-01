@@ -84,6 +84,14 @@ D:\Code\TTS\FastSpeech2-master\data\
     └───LJSpeech
         └───LJSpeech
 ```        
+6. Train
+Giải nén file này: `"D:\Code\TTS\FastSpeech2-master\hifigan\generator_LJSpeech.pth.tar.zip"` ra tại chỗ để có `hifigan\generator_LJSpeech.pth.tar`
+rồi chạy
+```
+python train.py -p config/LJSpeech/preprocess.yaml -m config/LJSpeech/model.yaml -t config/LJSpeech/train.yaml
+```
+tuy nhiên trên win, cái tqdm lồng nhau nó chạy không tốt lắm, nó cứ bị xuống dòng khi hết 100%, cần phải sửa lại code cho nó ngon
+
 đang làm đến đây thôi...
 
 

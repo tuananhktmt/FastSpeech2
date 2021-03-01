@@ -17,6 +17,7 @@ pip install -r requirements.txt
                          - LJ001-0005.wav
                          - LJ001-0001.wav
                          - LJ001-0002.wav
+cụ thể: 
 "D:\Code\TTS\FastSpeech2-master\data\ljspeech\metadata.csv"
 "D:\Code\TTS\FastSpeech2-master\data\ljspeech\wavs\LJ001-0003.wav"
 "D:\Code\TTS\FastSpeech2-master\data\ljspeech\wavs\LJ001-0004.wav"
@@ -86,7 +87,16 @@ D:\Code\TTS\FastSpeech2-master\data\
 ```        
 6. Train
 Giải nén file này: `"D:\Code\TTS\FastSpeech2-master\hifigan\generator_LJSpeech.pth.tar.zip"` ra tại chỗ để có `hifigan\generator_LJSpeech.pth.tar`
-rồi chạy
+giảm bớt thời gian train, bằng cách giảm tổng số epoch, và các bước liên quan. Sửa file `D:\Code\TTS\FastSpeech2-master\config\LJSpeech\train.yaml` như này:
+```
+step:
+  total_step: 500 #900000
+  log_step: 100
+  synth_step: 200 #1000
+  val_step: 100   #1000
+  save_step: 100 # 100000
+```  
+rồi chạy:
 ```
 python train.py -p config/LJSpeech/preprocess.yaml -m config/LJSpeech/model.yaml -t config/LJSpeech/train.yaml
 ```
